@@ -6,6 +6,7 @@ import { MonsterAttribute } from 'oldschooljs/dist/meta/monsterData';
 
 import { Activity, Time } from '../../lib/constants';
 import { getSimilarItems } from '../../lib/data/similarItems';
+import { GearSetupTypes, GearStat } from '../../lib/gear';
 import {
 	boostCannon,
 	boostCannonMulti,
@@ -34,7 +35,7 @@ import { SlayerTaskUnlocksEnum } from '../../lib/slayer/slayerUnlocks';
 import { determineBoostChoice, getUsersCurrentSlayerInfo } from '../../lib/slayer/slayerUtil';
 import { BotCommand } from '../../lib/structures/BotCommand';
 import { MonsterActivityTaskOptions } from '../../lib/types/minions';
-import findMonster, {
+import {
 	addArrayOfNumbers,
 	formatDuration,
 	isWeekend,
@@ -44,6 +45,7 @@ import findMonster, {
 	updateBankSetting
 } from '../../lib/util';
 import addSubTaskToActivityTask from '../../lib/util/addSubTaskToActivityTask';
+import findMonster from '../../lib/util/findMonster';
 import itemID from '../../lib/util/itemID';
 
 const validMonsters = killableMonsters.map(mon => mon.name).join('\n');
@@ -172,18 +174,24 @@ export default class extends BotCommand {
 				boosts.push('15% for Dragon hunter crossbow');
 			}
 		}
-		// Add 15% slayer boost on task if they have black mask or similar
-		if (attackStyles.includes(SkillsEnum.Ranged) || attackStyles.includes(SkillsEnum.Magic)) {
-			if (isOnTask && msg.author.hasItemEquippedOrInBank('Black mask (i)')) {
+
+		// Black mask and salve don't stack.
+		const salveBoost = boosts.join('').toLowerCase().includes('salve amulet');
+		if (!salveBoost) {
+			// Add 15% slayer boost on task if they have black mask or similar
+			if (attackStyles.includes(SkillsEnum.Ranged) || attackStyles.includes(SkillsEnum.Magic)) {
+				if (isOnTask && msg.author.hasItemEquippedOrInBank('Black mask (i)')) {
+					timeToFinish = reduceNumByPercent(timeToFinish, 15);
+					boosts.push('15% for Black mask (i) on non-melee task');
+				}
+			} else if (
+				isOnTask &&
+				(msg.author.hasItemEquippedOrInBank('Black mask') ||
+					msg.author.hasItemEquippedOrInBank('Black mask (i)'))
+			) {
 				timeToFinish = reduceNumByPercent(timeToFinish, 15);
-				boosts.push('15% for Black mask (i) on non-melee task');
+				boosts.push('15% for Black mask on melee task');
 			}
-		} else if (
-			isOnTask &&
-			(msg.author.hasItemEquippedOrInBank('Black mask') || msg.author.hasItemEquippedOrInBank('Black mask (i)'))
-		) {
-			timeToFinish = reduceNumByPercent(timeToFinish, 15);
-			boosts.push('15% for Black mask on melee task');
 		}
 
 		// Initialize consumable costs before any are calculated.
@@ -337,6 +345,19 @@ export default class extends BotCommand {
 			const [healAmountNeeded, foodMessages] = calculateMonsterFood(monster, msg.author);
 			messages = messages.concat(foodMessages);
 
+			let gearToCheck = GearSetupTypes.Melee;
+
+			switch (monster.attackStyleToUse) {
+				case GearStat.AttackMagic:
+					gearToCheck = GearSetupTypes.Mage;
+					break;
+				case GearStat.AttackRanged:
+					gearToCheck = GearSetupTypes.Range;
+					break;
+				default:
+					break;
+			}
+
 			const [result] = await removeFoodFromUser({
 				client: this.client,
 				user: msg.author,
@@ -345,7 +366,7 @@ export default class extends BotCommand {
 				activityName: monster.name,
 				attackStylesUsed: removeDuplicatesFromArray([
 					...objectKeys(monster.minimumGearRequirements ?? {}),
-					monster.attackStyleToUse
+					gearToCheck
 				]),
 				learningPercentage: percentReduced
 			});

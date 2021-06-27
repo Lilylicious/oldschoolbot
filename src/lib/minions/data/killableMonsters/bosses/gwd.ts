@@ -2,7 +2,7 @@ import { Monsters } from 'oldschooljs';
 
 import { Time } from '../../../../constants';
 import { bosses } from '../../../../data/collectionLog';
-import { GearSetupTypes, GearStat } from '../../../../gear';
+import { GearStat } from '../../../../gear';
 import { SkillsEnum } from '../../../../skilling/types';
 import itemID from '../../../../util/itemID';
 import resolveItems, { deepResolveItems } from '../../../../util/resolveItems';
@@ -38,7 +38,7 @@ const killableBosses: KillableMonster[] = [
 		customMonsterHP: 656,
 		combatXpMultiplier: 1.126,
 		healAmountNeeded: 20 * 5,
-		attackStyleToUse: GearSetupTypes.Melee,
+		attackStyleToUse: GearStat.AttackSlash,
 		attackStylesUsed: [GearStat.AttackCrush, GearStat.AttackRanged]
 	},
 	{
@@ -77,8 +77,8 @@ const killableBosses: KillableMonster[] = [
 		defaultAttackStyles: [SkillsEnum.Ranged],
 		customMonsterHP: 723,
 		combatXpMultiplier: 1.132,
-		healAmountNeeded: 20 * 5,
-		attackStyleToUse: GearSetupTypes.Range,
+		healAmountNeeded: 18 * 4,
+		attackStyleToUse: GearStat.AttackRanged,
 		attackStylesUsed: [GearStat.AttackRanged, GearStat.AttackMagic]
 	},
 	{
@@ -114,8 +114,8 @@ const killableBosses: KillableMonster[] = [
 		disallowedAttackStyles: [SkillsEnum.Attack, SkillsEnum.Strength, SkillsEnum.Magic],
 		customMonsterHP: 641,
 		combatXpMultiplier: 1.159,
-		healAmountNeeded: 20 * 5,
-		attackStyleToUse: GearSetupTypes.Range,
+		healAmountNeeded: 18 * 4,
+		attackStyleToUse: GearStat.AttackRanged,
 		attackStylesUsed: [GearStat.AttackCrush, GearStat.AttackMagic]
 	},
 	{
@@ -154,8 +154,8 @@ const killableBosses: KillableMonster[] = [
 		defaultAttackStyles: [SkillsEnum.Attack],
 		customMonsterHP: 708,
 		combatXpMultiplier: 1.135,
-		healAmountNeeded: 20 * 5,
-		attackStyleToUse: GearSetupTypes.Melee,
+		healAmountNeeded: 20 * 3,
+		attackStyleToUse: GearStat.AttackSlash,
 		attackStylesUsed: [GearStat.AttackMagic]
 	}
 ];
