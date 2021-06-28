@@ -1700,8 +1700,7 @@ export const slayerLog: CollectionLogData = {
 		'Black boots',
 		'Mithril boots',
 		'Adamant boots',
-		'Rune boots',
-		'Dragon boots'
+		'Rune boots'
 	]),
 	'Demonic Gorillas': resolveItems([
 		'Zenyte shard',
