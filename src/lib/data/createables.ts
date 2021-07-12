@@ -287,7 +287,7 @@ const Createables: Createable[] = [
 		},
 		outputItems: {
 			// Uncharged dragonfire shield
-			11284: 1
+			11_284: 1
 		},
 		requiredSkills: { smithing: 90 }
 	},
@@ -299,7 +299,7 @@ const Createables: Createable[] = [
 		},
 		outputItems: {
 			// Uncharged Dragonfire ward
-			22003: 1
+			22_003: 1
 		},
 		requiredSkills: { smithing: 90 }
 	},
@@ -1535,6 +1535,15 @@ const Createables: Createable[] = [
 		name: 'Revert saradomin castlewars hood',
 		inputItems: {
 			[itemID('Saradomin castlewars hood')]: 1
+		},
+		outputItems: {
+			[itemID('Castle wars ticket')]: 10
+		}
+	},
+	{
+		name: 'Revert saradomin castlewars cloak',
+		inputItems: {
+			[itemID('Saradomin castlewars cloak')]: 1
 		},
 		outputItems: {
 			[itemID('Castle wars ticket')]: 10

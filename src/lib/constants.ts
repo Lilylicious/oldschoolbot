@@ -1,3 +1,4 @@
+import { MessageButton } from 'discord.js';
 import PQueue from 'p-queue';
 import { join } from 'path';
 
@@ -131,7 +132,7 @@ export const enum Image {
 }
 
 export const enum Color {
-	Orange = 16098851
+	Orange = 16_098_851
 }
 
 export const SupportServer = '342983479501389826';
@@ -383,7 +384,7 @@ export const badges: { [key: number]: string } = {
 
 export const MAX_QP = 280;
 
-export const MIMIC_MONSTER_ID = 23184;
+export const MIMIC_MONSTER_ID = 23_184;
 
 export const continuationChars = 'abdefghjkmnoprstuvwxyz123456789'.split('');
 export const CENA_CHARS = ['​', '‎', '‍'];
@@ -441,3 +442,18 @@ export const LEVEL_99_XP = 13_034_431;
 export const MAX_LEVEL = 99;
 export const MAX_TOTAL_LEVEL = Object.values(SkillsEnum).length * MAX_LEVEL;
 export const SILENT_ERROR = 'SILENT_ERROR';
+
+export const informationalButtons = [
+	new MessageButton().setLabel('Wiki').setEmoji('📰').setURL('https://wiki.oldschool.gg/').setStyle('LINK'),
+	new MessageButton()
+		.setLabel('Patreon')
+		.setEmoji('679334888792391703')
+		.setURL('https://www.patreon.com/oldschoolbot')
+		.setStyle('LINK'),
+	new MessageButton()
+		.setLabel('Support Server')
+		.setEmoji('778418736180494347')
+		.setURL('https://www.discord.gg/ob')
+		.setStyle('LINK'),
+	new MessageButton().setLabel('Bot Invite').setEmoji('🤖').setURL('http://invite.oldschool.gg/').setStyle('LINK')
+];
