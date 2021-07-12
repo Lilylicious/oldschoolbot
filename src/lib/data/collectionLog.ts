@@ -411,9 +411,9 @@ export const bosses: CollectionLogData = {
 		'Bludgeon claw',
 		'Bludgeon spine',
 		'Bludgeon axon',
+		'Abyssal head',
 		'Jar of miasma',
-		'Abyssal orphan',
-		'Abyssal head'
+		'Abyssal orphan'
 	]),
 	Kraken: resolveItems(['Trident of the seas (full)', 'Kraken tentacle', 'Jar of dirt', 'Pet kraken']),
 	Cerberus: resolveItems([
